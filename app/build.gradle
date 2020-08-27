@@ -35,6 +35,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    buildFeatures {
+        dataBinding = true
+    }
+    androidExtensions {
+        experimental = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
@@ -46,6 +59,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.fragment:fragment:1.2.5'
+
+    //Lifecycle
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha07"
 
     //Koin for Android
     def koin_version = "2.1.5"
