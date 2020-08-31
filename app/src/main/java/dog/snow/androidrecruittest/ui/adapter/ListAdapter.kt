@@ -1,49 +1,69 @@
 package dog.snow.androidrecruittest.ui.adapter
 
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import dog.snow.androidrecruittest.R
+import dog.snow.androidrecruittest.databinding.ListItemBinding
 import dog.snow.androidrecruittest.ui.model.ListItem
 
-class ListAdapter(private val onClick: (item: ListItem, position: Int, view: View) -> Unit) :
-    androidx.recyclerview.widget.ListAdapter<ListItem, ListAdapter.ViewHolder>(DIFF_CALLBACK) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView =
-            LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
-        return ViewHolder(itemView, onClick)
+class ListAdapter(private val interaction: Interaction? = null) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListItem>() {
+
+        override fun areItemsTheSame(oldItem: ListItem, newItem: ListItem): Boolean =
+            oldItem.id == newItem.id
+
+        override fun areContentsTheSame(oldItem: ListItem, newItem: ListItem): Boolean =
+            oldItem == newItem
+    }
+    private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ListItemBinding.inflate(inflater, parent, false)
+
+        return ListViewHolder(
+            binding,
+            interaction
+        )
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) =
-        holder.bind(getItem(position))
-
-    class ViewHolder(
-        itemView: View,
-        private val onClick: (item: ListItem, position: Int, view: View) -> Unit
-    ) :
-        RecyclerView.ViewHolder(itemView) {
-        fun bind(item: ListItem) = with(itemView) {
-            val ivThumb: ImageView = findViewById(R.id.iv_thumb)
-            val tvTitle: TextView = findViewById(R.id.tv_photo_title)
-            val tvAlbumTitle: TextView = findViewById(R.id.tv_album_title)
-            tvTitle.text = item.title
-            tvAlbumTitle.text = item.albumTitle
-            //TODO: display item.thumbnailUrl in ivThumb
-            setOnClickListener { onClick(item, adapterPosition, this) }
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is ListViewHolder -> {
+                holder.bind(differ.currentList.get(position))
+            }
         }
     }
 
-    companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListItem>() {
-            override fun areItemsTheSame(oldItem: ListItem, newItem: ListItem): Boolean =
-                oldItem.id == newItem.id
+    override fun getItemCount(): Int {
+        return differ.currentList.size
+    }
 
-            override fun areContentsTheSame(oldItem: ListItem, newItem: ListItem): Boolean =
-                oldItem == newItem
+    fun submitList(list: List<ListItem>) {
+        differ.submitList(list)
+    }
+
+    class ListViewHolder
+    constructor(
+        private val binding: ListItemBinding,
+        private val interaction: Interaction?
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(item: ListItem) {
+            binding.item = item
+            binding.itemCardView.setOnClickListener {
+                interaction?.onItemSelected(adapterPosition, item)
+            }
         }
+    }
+
+    interface Interaction {
+        fun onItemSelected(position: Int, item: ListItem)
     }
 }

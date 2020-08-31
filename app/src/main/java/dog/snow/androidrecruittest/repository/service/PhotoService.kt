@@ -6,6 +6,6 @@ import retrofit2.http.GET
 
 interface PhotoService {
 
-    @GET(value = "/photos")
+    @GET(value = "/photos?_limit=100")
     suspend fun getPhotos(): Response<List<RawPhoto>>
 }

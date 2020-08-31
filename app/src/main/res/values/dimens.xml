@@ -13,4 +13,7 @@
 
     <dimen name="thumb_size">64dp</dimen>
     <dimen name="search_size">80dp</dimen>
+
+    <dimen name="card_view_elevation">5dp</dimen>
+    <dimen name="card_view_corner_radius">5dp</dimen>
 </resources>

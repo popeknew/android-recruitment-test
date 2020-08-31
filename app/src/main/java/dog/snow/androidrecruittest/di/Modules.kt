@@ -4,8 +4,10 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import dog.snow.androidrecruittest.repository.AlbumRepository
 import dog.snow.androidrecruittest.view.SplashViewModel
 import dog.snow.androidrecruittest.repository.PhotoRepository
+import dog.snow.androidrecruittest.repository.UserRepository
 import dog.snow.androidrecruittest.repository.service.AlbumService
 import dog.snow.androidrecruittest.repository.service.PhotoService
+import dog.snow.androidrecruittest.repository.service.UserService
 import okhttp3.OkHttpClient
 import org.koin.android.viewmodel.dsl.viewModel
 import retrofit2.Retrofit
@@ -19,15 +21,17 @@ val netModule = module {
     single { provideRetrofit(get()) }
     single { providePhotoService(get()) }
     single { provideAlbumService(get()) }
+    single { provideUserService(get()) }
 }
 
 val repoModule = module {
     single { PhotoRepository(get()) }
     single { AlbumRepository(get()) }
+    single { UserRepository(get()) }
 }
 
 val viewModelModule = module {
-    viewModel { SplashViewModel(get(), get()) }
+    viewModel { SplashViewModel(get(), get(), get()) }
 }
 
 private fun provideOkHttpClient(): OkHttpClient =
@@ -47,3 +51,6 @@ private fun providePhotoService(retrofit: Retrofit): PhotoService =
 
 private fun provideAlbumService(retrofit: Retrofit): AlbumService =
     retrofit.create(AlbumService::class.java)
+
+private fun provideUserService(retrofit: Retrofit): UserService =
+    retrofit.create(UserService::class.java)

@@ -6,7 +6,7 @@ import kotlinx.coroutines.withContext
 
 class AlbumRepository(private val service: AlbumService) {
 
-    suspend fun getAllAlbums(albumId: Int) = withContext(Dispatchers.IO) {
-        service.getAlbums(albumId)
+    suspend fun getAlbumById(albumId: Int) = withContext(Dispatchers.IO) {
+        service.getAlbumById(albumId)
     }
 }
