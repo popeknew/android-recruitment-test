@@ -35,7 +35,10 @@ class SplashActivity : AppCompatActivity(R.layout.splash_activity) {
         })
 
         iv_logo_sd_symbol.setOnClickListener {
+            val wysylka= viewModel.allPhotos.value?.first()
             val intent = Intent(this, MainActivity::class.java)
+            val gowno = viewModel.allPhotos.value
+            intent.putExtra("photos", viewModel.allPhotos.value?.toTypedArray())
             startActivity(intent)
         }
     }

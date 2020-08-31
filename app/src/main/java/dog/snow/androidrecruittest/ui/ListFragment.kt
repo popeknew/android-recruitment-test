@@ -1,6 +1,7 @@
 package dog.snow.androidrecruittest.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import dog.snow.androidrecruittest.R
@@ -17,6 +18,7 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.Interaction {
         super.onViewCreated(view, savedInstanceState)
 
         setUpRecyclerView()
+
     }
 
     private fun setUpRecyclerView() {
@@ -25,6 +27,9 @@ class ListFragment : Fragment(R.layout.list_fragment), ListAdapter.Interaction {
     }
 
     override fun onItemSelected(position: Int, item: ListItem) {
-        println("$item --------------------------------------------------------------")
+        val przeslane = arguments?.getParcelableArray("bundle")
+        przeslane?.forEach { element ->
+            Log.d("itemy", "$element")
+        }
     }
 }
