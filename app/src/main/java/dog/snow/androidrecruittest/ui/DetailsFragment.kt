@@ -1,7 +1,6 @@
 package dog.snow.androidrecruittest.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import dog.snow.androidrecruittest.R
 import dog.snow.androidrecruittest.databinding.FragmentDetailsBinding
-import org.koin.android.ext.android.bind
 
 class DetailsFragment : Fragment(R.layout.fragment_details) {
 
@@ -32,6 +30,6 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d("MACIEK", "onViewCreated: ${args.detail}")
+        Glide.with(this).load(R.drawable.ic_placeholder_dark).into(binding.ivPhoto)
     }
 }

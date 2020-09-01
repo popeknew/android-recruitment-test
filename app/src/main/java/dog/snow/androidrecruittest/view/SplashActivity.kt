@@ -2,45 +2,54 @@ package dog.snow.androidrecruittest.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dog.snow.androidrecruittest.ALBUMS
+import dog.snow.androidrecruittest.PHOTOS
 import dog.snow.androidrecruittest.R
+import dog.snow.androidrecruittest.USERS
 import dog.snow.androidrecruittest.repository.model.RawAlbum
 import dog.snow.androidrecruittest.repository.model.RawPhoto
 import dog.snow.androidrecruittest.repository.model.RawUser
-import kotlinx.android.synthetic.main.splash_activity.*
-import org.koin.android.ext.android.inject
+import kotlinx.android.synthetic.main.splash_activity.progress_bar
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class SplashActivity : AppCompatActivity(R.layout.splash_activity) {
 
-    private val viewModel by inject<SplashViewModel>()
+    private val viewModel: SplashViewModel by viewModel()
+
+    private val photosObserver = Observer<List<RawPhoto>> { photos ->
+        viewModel.getAlbums(photos)
+    }
+    private val albumsObserver = Observer<List<RawAlbum>> { albums ->
+        viewModel.getUsers(albums)
+    }
+    private val usersObserver = Observer<List<RawUser>> { users ->
+        if (users.isNotEmpty()) {
+            progress_bar.visibility = View.GONE
+            startMainActivity()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.allPhotos.observe(this, Observer<List<RawPhoto>> { photos ->
-            viewModel.getAlbums(photos)
-            Log.d("TAGGG", "$photos")
-        })
-
-        viewModel.allAlbums.observe(this, Observer<List<RawAlbum>> { albums ->
-            viewModel.getUsers(albums)
-            Log.d("TAGGG", "$albums")
-        })
-
-        viewModel.allUsers.observe(this, Observer<List<RawUser>> { users ->
-            Log.d("TAGGG", "$users")
-        })
-
-        iv_logo_sd_symbol.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("photos", viewModel.allPhotos.value?.toTypedArray())
-            intent.putExtra("albums", viewModel.allAlbums.value?.toTypedArray())
-            intent.putExtra("users", viewModel.allUsers.value?.toTypedArray())
-            startActivity(intent)
+        with(viewModel) {
+            allPhotos.observe(this@SplashActivity, photosObserver)
+            allAlbums.observe(this@SplashActivity, albumsObserver)
+            allUsers.observe(this@SplashActivity, usersObserver)
         }
+    }
+
+    private fun startMainActivity() {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            putExtra(PHOTOS, viewModel.allPhotos.value?.toTypedArray())
+            putExtra(ALBUMS, viewModel.allAlbums.value?.toTypedArray())
+            putExtra(USERS, viewModel.allUsers.value?.toTypedArray())
+        }
+        startActivity(intent)
     }
 
     private fun showError(errorMessage: String?) {

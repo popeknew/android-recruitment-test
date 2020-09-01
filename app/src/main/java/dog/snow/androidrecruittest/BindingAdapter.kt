@@ -4,11 +4,11 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 
-@BindingAdapter("setThumbnaill")
-fun ImageView.setThumbnaill(thumbnail: String) {
+@BindingAdapter("setThumbnail")
+fun ImageView.setThumbnail(thumbnail: String) {
     Glide
         .with(this)
-        .load(thumbnail)
+        .load("https://toysfun.pl/product-pol-20426-Schleich-Piesek-Cocker-Spaniel.html")
         .centerCrop()
         .into(this)
 }

@@ -5,7 +5,7 @@ import dog.snow.androidrecruittest.repository.model.RawAlbum
 import dog.snow.androidrecruittest.repository.model.RawPhoto
 import dog.snow.androidrecruittest.repository.model.RawUser
 
-fun Array<Parcelable>?.toPhotosList(): List<RawPhoto> {
+fun Array<Parcelable>?.toPhotoList(): List<RawPhoto> {
     val photoList = mutableListOf<RawPhoto>()
     this?.forEach { photo ->
         photo as RawPhoto
@@ -15,9 +15,9 @@ fun Array<Parcelable>?.toPhotosList(): List<RawPhoto> {
     return photoList
 }
 
-fun Array<Parcelable>.toAlbumsList(): List<RawAlbum> {
+fun Array<Parcelable>?.toAlbumList(): List<RawAlbum> {
     val albumList = mutableListOf<RawAlbum>()
-    forEach { album ->
+    this?.forEach { album ->
         album as RawAlbum
         albumList.add(album)
     }
@@ -25,9 +25,9 @@ fun Array<Parcelable>.toAlbumsList(): List<RawAlbum> {
     return albumList
 }
 
-fun Array<Parcelable>.toUsersList(): List<RawUser> {
+fun Array<Parcelable>?.toUserList(): List<RawUser> {
     val userList = mutableListOf<RawUser>()
-    forEach { user ->
+    this?.forEach { user ->
         user as RawUser
         userList.add(user)
     }

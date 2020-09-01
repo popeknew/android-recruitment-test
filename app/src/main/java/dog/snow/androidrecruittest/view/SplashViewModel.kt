@@ -28,8 +28,6 @@ class SplashViewModel(
     private val _allUsers = MutableLiveData<List<RawUser>>()
     val allUsers: LiveData<List<RawUser>> = _allUsers
 
-    private val mockList = MutableLiveData<MutableList<ListItem>>()
-
     private fun getAlbumIds(photos: List<RawPhoto>): Set<Int> {
         val albumIdSet = mutableSetOf<Int>()
         photos.forEach { photo ->
@@ -82,19 +80,6 @@ class SplashViewModel(
             if (photosResponse.isSuccessful) {
                 _allPhotos.value = photosResponse.body()
             }
-
-/*            val firstElement = allPhotos.value?.first()
-            if (firstElement != null) {
-                val listitem = ListItem(
-                    firstElement.id,
-                    firstElement.title,
-                    "moj album title",
-                    firstElement.thumbnailUrl
-                )
-                mockList.value?.add(listitem)
-            }*/
-
-            //    val albumsResponse = albumRepository.getAllAlbums(allPhotos.value.)
         }
     }
 }
