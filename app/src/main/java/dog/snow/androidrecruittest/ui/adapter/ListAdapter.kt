@@ -10,8 +10,12 @@ import dog.snow.androidrecruittest.R
 import dog.snow.androidrecruittest.databinding.ListItemBinding
 import dog.snow.androidrecruittest.ui.model.ListItem
 
+typealias onItemClickCallback = (ListItem) -> Unit
+
 class ListAdapter(private val interaction: Interaction? = null) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    var onItemClickCallback: onItemClickCallback? = null
 
     val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListItem>() {
 

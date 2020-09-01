@@ -1,6 +1,8 @@
 package dog.snow.androidrecruittest.di
 
+import android.content.Context
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import dog.snow.androidrecruittest.R
 import dog.snow.androidrecruittest.repository.AlbumRepository
 import dog.snow.androidrecruittest.view.SplashViewModel
 import dog.snow.androidrecruittest.repository.PhotoRepository
@@ -8,6 +10,7 @@ import dog.snow.androidrecruittest.repository.UserRepository
 import dog.snow.androidrecruittest.repository.service.AlbumService
 import dog.snow.androidrecruittest.repository.service.PhotoService
 import dog.snow.androidrecruittest.repository.service.UserService
+import dog.snow.androidrecruittest.ui.ListViewModel
 import okhttp3.OkHttpClient
 import org.koin.android.viewmodel.dsl.viewModel
 import retrofit2.Retrofit
@@ -16,9 +19,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 private const val BASE_URL = "https://jsonplaceholder.typicode.com/"
 
-val netModule = module {
+fun getNetModule(context: Context) = module {
     single { provideOkHttpClient() }
-    single { provideRetrofit(get()) }
+    single { provideRetrofit(get(), context) }
     single { providePhotoService(get()) }
     single { provideAlbumService(get()) }
     single { provideUserService(get()) }
@@ -32,16 +35,17 @@ val repoModule = module {
 
 val viewModelModule = module {
     viewModel { SplashViewModel(get(), get(), get()) }
+    viewModel { ListViewModel() }
 }
 
 private fun provideOkHttpClient(): OkHttpClient =
     OkHttpClient().newBuilder().build()
 
-private fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
+private fun provideRetrofit(okHttpClient: OkHttpClient, context: Context): Retrofit =
     Retrofit
         .Builder()
         .client(okHttpClient)
-        .baseUrl(BASE_URL)
+        .baseUrl(context.getString(R.string.base_url))
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .addConverterFactory(GsonConverterFactory.create())
         .build()

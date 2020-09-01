@@ -1,30 +1,38 @@
 package dog.snow.androidrecruittest.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavArgument
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import dog.snow.androidrecruittest.R
-import dog.snow.androidrecruittest.repository.model.RawPhoto
-import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity : AppCompatActivity(R.layout.main_activity){
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        val intencik = intent.getParcelableArrayExtra("photos")
+        val photos = intent.getParcelableArrayExtra("photos")
+        val albums = intent.getParcelableArrayExtra("albums")
+        val users = intent.getParcelableArrayExtra("users")
 
-        val navHostFragment = nav_host_fragment.findNavController().navInflater
+       // val navHostFragment = nav_host_fragment.findNavController().navInflater
 /*//        val inflater = navHostFragment.navController.navInflater*/
-        val graph = navHostFragment.inflate(R.navigation.nav_graph)
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+
+//        val navController = findNavController(R.id.nav_host_fragment)
+        val graph = navController.navInflater.inflate(R.navigation.nav_graph)
+
+
 
         val bundle = Bundle()
-        bundle.putParcelableArray("bundle", intencik)
+        bundle.putParcelableArray("photos", photos)
+        bundle.putParcelableArray("albums", albums)
+        bundle.putParcelableArray("users", users)
 
-        nav_host_fragment.findNavController().setGraph(graph, bundle)
+        navController.setGraph(R.navigation.nav_graph, bundle)
 
     }
 }

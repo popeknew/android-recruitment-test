@@ -1,7 +1,7 @@
 package dog.snow.androidrecruittest
 
 import android.app.Application
-import dog.snow.androidrecruittest.di.netModule
+import dog.snow.androidrecruittest.di.getNetModule
 import dog.snow.androidrecruittest.di.repoModule
 import dog.snow.androidrecruittest.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
@@ -17,7 +17,7 @@ class MyApplication : Application() {
             androidLogger()
             androidContext(this@MyApplication)
             modules(
-                listOf(netModule, viewModelModule, repoModule)
+                listOf(getNetModule(applicationContext), viewModelModule, repoModule)
             )
         }
     }
