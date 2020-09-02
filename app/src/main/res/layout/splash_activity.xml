@@ -42,4 +42,9 @@
         app:layout_constraintTop_toBottomOf="@id/iv_logo_sd_symbol"
         tools:visibility="visible" />
 
+    <include
+        android:id="@+id/offline_banner"
+        layout="@layout/layout_banner"
+        android:visibility="gone"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

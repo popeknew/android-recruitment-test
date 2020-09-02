@@ -22,7 +22,8 @@
             app:layout_constraintDimensionRatio="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_placeholder"/>
 
         <TextView
             android:id="@+id/tv_photo_title"
@@ -78,5 +79,10 @@
             app:layout_constraintStart_toStartOf="@+id/tv_email"
             app:layout_constraintTop_toBottomOf="@+id/tv_email"
             tools:text="123-456-789" />
+
+        <include
+            android:id="@+id/offline_banner"
+            layout="@layout/layout_banner"
+            android:visibility="gone"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

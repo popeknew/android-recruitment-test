@@ -40,6 +40,11 @@ class ListFragment : Fragment(R.layout.fragment_list), ListAdapter.Interaction {
         adapter = ListAdapter(this)
         rv_items.adapter = adapter
         adapter.submitList(viewModel.getItemList())
+        if (viewModel.getItemList().isNullOrEmpty()) {
+            layout_empty_view.visibility = View.VISIBLE
+        } else {
+            layout_empty_view.visibility = View.GONE
+        }
     }
 
     override fun onItemSelected(position: Int, item: ListItem) {

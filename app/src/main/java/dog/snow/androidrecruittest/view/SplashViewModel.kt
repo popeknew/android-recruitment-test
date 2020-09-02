@@ -28,6 +28,13 @@ class SplashViewModel(
     private val _allUsers = MutableLiveData<List<RawUser>>()
     val allUsers: LiveData<List<RawUser>> = _allUsers
 
+    fun getAllPhotos() = viewModelScope.launch {
+        val photosResponse = photoRepository.getPhotos()
+        if (photosResponse.isSuccessful) {
+            _allPhotos.value = photosResponse.body()
+        }
+    }
+
     private fun getAlbumIds(photos: List<RawPhoto>): Set<Int> {
         val albumIdSet = mutableSetOf<Int>()
         photos.forEach { photo ->
@@ -75,11 +82,11 @@ class SplashViewModel(
     }
 
     init {
-        viewModelScope.launch {
+/*        viewModelScope.launch {
             val photosResponse = photoRepository.getPhotos()
             if (photosResponse.isSuccessful) {
                 _allPhotos.value = photosResponse.body()
             }
-        }
+        }*/
     }
 }
