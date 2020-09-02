@@ -12,6 +12,7 @@ class ListViewModel : ViewModel() {
     private val allPhotos = mutableListOf<RawPhoto>()
     private val allAlbums = mutableListOf<RawAlbum>()
     private val allUsers = mutableListOf<RawUser>()
+    private val itemList = mutableListOf<ListItem>()
 
     fun setListsFromIntent(photos: List<RawPhoto>, albums: List<RawAlbum>, users: List<RawUser>) {
         allPhotos.addAll(photos)
@@ -20,7 +21,6 @@ class ListViewModel : ViewModel() {
     }
 
     fun getItemList(): List<ListItem> {
-        val itemList = mutableListOf<ListItem>()
         allPhotos.forEach { photo ->
             val filteredAlbum = allAlbums.filter { album ->
                 album.id == photo.albumId
@@ -58,5 +58,11 @@ class ListViewModel : ViewModel() {
             user.phone,
             photo.thumbnailUrl
         )
+    }
+
+    fun getFilteredItemList(text: String): List<ListItem> {
+        return itemList.filter { item ->
+            item.title.contains(text) || item.albumTitle.contains(text)
+        }
     }
 }
