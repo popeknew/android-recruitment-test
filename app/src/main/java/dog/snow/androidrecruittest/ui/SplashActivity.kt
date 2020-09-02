@@ -1,4 +1,4 @@
-package dog.snow.androidrecruittest.view
+package dog.snow.androidrecruittest.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,14 +6,15 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.androidstudy.networkmanager.Monitor
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import dog.snow.androidrecruittest.ALBUMS
-import dog.snow.androidrecruittest.PHOTOS
+import dog.snow.androidrecruittest.constants.ALBUMS
+import dog.snow.androidrecruittest.constants.PHOTOS
 import dog.snow.androidrecruittest.R
-import dog.snow.androidrecruittest.USERS
-import dog.snow.androidrecruittest.ext.CustomAppCompatActivity
-import dog.snow.androidrecruittest.repository.model.RawAlbum
-import dog.snow.androidrecruittest.repository.model.RawPhoto
-import dog.snow.androidrecruittest.repository.model.RawUser
+import dog.snow.androidrecruittest.constants.USERS
+import dog.snow.androidrecruittest.custom.CustomAppCompatActivity
+import dog.snow.androidrecruittest.model.RawAlbum
+import dog.snow.androidrecruittest.model.RawPhoto
+import dog.snow.androidrecruittest.model.RawUser
+import dog.snow.androidrecruittest.vm.SplashViewModel
 import kotlinx.android.synthetic.main.splash_activity.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -53,7 +54,7 @@ class SplashActivity : CustomAppCompatActivity() {
                 viewModel.getAllPhotos()
                 offline_banner.visibility = View.GONE
             } else {
-                showError("nie ma neta panie")
+                showError(getString(R.string.cant_download_dialog_message))
                 offline_banner.visibility = View.VISIBLE
             }
         }

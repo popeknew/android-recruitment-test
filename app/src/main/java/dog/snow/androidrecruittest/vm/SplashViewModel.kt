@@ -1,22 +1,17 @@
-package dog.snow.androidrecruittest.view
+package dog.snow.androidrecruittest.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dog.snow.androidrecruittest.repository.AlbumRepository
-import dog.snow.androidrecruittest.repository.PhotoRepository
-import dog.snow.androidrecruittest.repository.UserRepository
-import dog.snow.androidrecruittest.repository.model.RawAlbum
-import dog.snow.androidrecruittest.repository.model.RawPhoto
-import dog.snow.androidrecruittest.repository.model.RawUser
-import dog.snow.androidrecruittest.ui.model.ListItem
+import dog.snow.androidrecruittest.repo.Repository
+import dog.snow.androidrecruittest.model.RawAlbum
+import dog.snow.androidrecruittest.model.RawPhoto
+import dog.snow.androidrecruittest.model.RawUser
 import kotlinx.coroutines.launch
 
 class SplashViewModel(
-    private val photoRepository: PhotoRepository,
-    private val albumRepository: AlbumRepository,
-    private val userRepository: UserRepository
+    private val repository: Repository
 ) : ViewModel() {
 
     private val _allPhotos = MutableLiveData<List<RawPhoto>>()
@@ -29,7 +24,7 @@ class SplashViewModel(
     val allUsers: LiveData<List<RawUser>> = _allUsers
 
     fun getAllPhotos() = viewModelScope.launch {
-        val photosResponse = photoRepository.getPhotos()
+        val photosResponse = repository.getPhotos()
         if (photosResponse.isSuccessful) {
             _allPhotos.value = photosResponse.body()
         }
@@ -49,7 +44,7 @@ class SplashViewModel(
         viewModelScope.launch {
             val albums = mutableListOf<RawAlbum>()
             albumIds.forEach { albumId ->
-                val albumResponse = albumRepository.getAlbumById(albumId)
+                val albumResponse = repository.getAlbumById(albumId)
                 if (albumResponse.isSuccessful) {
                     albums.add(albumResponse.body()!!)
                 }
@@ -72,21 +67,12 @@ class SplashViewModel(
         viewModelScope.launch {
             val users = mutableListOf<RawUser>()
             userIds.forEach { userId ->
-                val userResponse = userRepository.getUserById(userId)
+                val userResponse = repository.getUserById(userId)
                 if (userResponse.isSuccessful) {
                     users.add(userResponse.body()!!)
                 }
             }
             _allUsers.value = users.toList()
         }
-    }
-
-    init {
-/*        viewModelScope.launch {
-            val photosResponse = photoRepository.getPhotos()
-            if (photosResponse.isSuccessful) {
-                _allPhotos.value = photosResponse.body()
-            }
-        }*/
     }
 }

@@ -1,9 +1,9 @@
 package dog.snow.androidrecruittest.ext
 
 import android.os.Parcelable
-import dog.snow.androidrecruittest.repository.model.RawAlbum
-import dog.snow.androidrecruittest.repository.model.RawPhoto
-import dog.snow.androidrecruittest.repository.model.RawUser
+import dog.snow.androidrecruittest.model.RawAlbum
+import dog.snow.androidrecruittest.model.RawPhoto
+import dog.snow.androidrecruittest.model.RawUser
 
 fun Array<Parcelable>?.toPhotoList(): List<RawPhoto> {
     val photoList = mutableListOf<RawPhoto>()

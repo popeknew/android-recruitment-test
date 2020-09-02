@@ -4,14 +4,17 @@
     <style name="Base.AppTheme" parent="@style/Theme.MaterialComponents.DayNight.NoActionBar" />
 
     <style name="AppTheme" parent="Base.AppTheme" >
-        <item name="colorPrimary">#008577</item>
-        <item name="colorPrimaryDark">#00574B</item>
-        <item name="colorAccent">#D81B60</item>
-        <item name="android:colorBackground">#FFFFFF</item>
-        <item name="colorError">#FF0000</item>
-        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorPrimary">@color/light_primary_color</item>
+        <item name="colorPrimaryDark">@color/light_primary_dark_color</item>
+        <item name="colorAccent">@color/light_accent_color</item>
+        <item name="colorError">@color/light_error_color</item>
     </style>
 
-    <style name="AppTheme.SplashTheme" />
+    <style name="AppTheme.SplashTheme" >
+        <item name="colorPrimary">@color/dark_primary_color</item>
+        <item name="colorPrimaryDark">@color/dark_primary_dark_color</item>
+        <item name="colorAccent">@color/dark_accent_color</item>
+        <item name="colorError">@color/dark_error_color</item>
+    </style>
 
 </resources>

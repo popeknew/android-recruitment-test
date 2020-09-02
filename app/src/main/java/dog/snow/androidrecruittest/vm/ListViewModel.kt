@@ -1,11 +1,11 @@
-package dog.snow.androidrecruittest.ui
+package dog.snow.androidrecruittest.vm
 
 import androidx.lifecycle.ViewModel
-import dog.snow.androidrecruittest.repository.model.RawAlbum
-import dog.snow.androidrecruittest.repository.model.RawPhoto
-import dog.snow.androidrecruittest.repository.model.RawUser
-import dog.snow.androidrecruittest.ui.model.Detail
-import dog.snow.androidrecruittest.ui.model.ListItem
+import dog.snow.androidrecruittest.model.RawAlbum
+import dog.snow.androidrecruittest.model.RawPhoto
+import dog.snow.androidrecruittest.model.RawUser
+import dog.snow.androidrecruittest.model.Detail
+import dog.snow.androidrecruittest.model.ListItem
 
 class ListViewModel : ViewModel() {
 

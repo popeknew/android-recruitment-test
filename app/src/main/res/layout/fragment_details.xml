@@ -4,7 +4,7 @@
     <data>
         <variable
             name="detail"
-            type="dog.snow.androidrecruittest.ui.model.Detail" />
+            type="dog.snow.androidrecruittest.model.Detail" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

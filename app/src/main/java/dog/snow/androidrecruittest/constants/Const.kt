@@ -1,4 +1,4 @@
-package dog.snow.androidrecruittest
+package dog.snow.androidrecruittest.constants
 
 const val PHOTO_LIMIT = 100
 

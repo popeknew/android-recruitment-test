@@ -17,7 +17,7 @@
         android:label="DetailsFragment" >
         <argument
             android:name="detail"
-            app:argType="dog.snow.androidrecruittest.ui.model.Detail" />
+            app:argType="dog.snow.androidrecruittest.model.Detail" />
     </fragment>
 
 </navigation>

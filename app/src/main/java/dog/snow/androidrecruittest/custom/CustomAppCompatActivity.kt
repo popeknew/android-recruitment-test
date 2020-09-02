@@ -1,4 +1,4 @@
-package dog.snow.androidrecruittest.ext
+package dog.snow.androidrecruittest.custom
 
 import androidx.appcompat.app.AppCompatActivity
 import com.androidstudy.networkmanager.Monitor
